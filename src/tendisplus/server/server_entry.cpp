@@ -1469,14 +1469,14 @@ void ServerEntry::stop() {
   _replMgr->stop();
   if (_migrateMgr)
     _migrateMgr->stop();
+  if (_clusterMgr) {
+    _clusterMgr->stop();
+  }
   if (_indexMgr)
     _indexMgr->stop();
   {
     std::lock_guard<std::mutex> lk(_mutex_session);
     _sessions.clear();
-  }
-  if (_clusterMgr) {
-    _clusterMgr->stop();
   }
   if (_gcMgr) {
     _gcMgr->stop();

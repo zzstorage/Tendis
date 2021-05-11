@@ -2692,9 +2692,9 @@ Status ClusterState::clusterHandleSlaveFailover() {
   if (auth_age > auth_retry_time) {
     // TODO(wayenchen) add API to get and set _failoverAuth** params
     auto delayTime = msSinceEpoch() +
-      500 + /* Fixed delay of 500 milliseconds, let FAIL msg propagate. */
+      /* Fixed delay of 500 milliseconds, let FAIL msg propagate. */
       redis_port::random() %
-        500; /* Random delay between 0 and 500 milliseconds. */
+        100; /* Random delay between 0 and 100 milliseconds, just suitable for the situation one master just have one slave. */
     setFailAuthTime(delayTime);
     setFailAuthCount(0);
     setFailAuthSent(0);
